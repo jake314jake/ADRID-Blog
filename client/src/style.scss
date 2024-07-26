@@ -1,0 +1,217 @@
+$lightGreen: #90ee90;
+
+.app {
+    .container {
+        .boxs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: $lightGreen;
+
+            h1 {
+                color: teal;
+                margin-bottom: 20px;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                background-color: white;
+                padding: 50px;
+
+                input {
+                    padding: 10px;
+                    border: none;
+                    border-bottom: 3px solid black;
+                }
+
+                button {
+                    padding: 10px;
+                    border: none;
+                    background-color: teal;
+                    color: white;
+
+                    &:hover {
+                        background-color: $lightGreen;
+                        color: teal;
+                    }
+                }
+
+                span {
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                .spanerror {
+                    color: red;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .spanerror {
+        color: red;
+        font-size: 12px;
+    }
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: $lightGreen;
+        color: #fff;
+
+        .left-container {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+
+            .username-container {
+                margin-left: 10px;
+            }
+        }
+
+        .right-container {
+            a {
+                color: #fff;
+                text-decoration: none;
+                margin-left: 15px;
+                font-size: 1rem;
+                transition: color 0.3s ease;
+                gap: 10px;
+                padding: 5px 10px;
+                border: 2px solid black;
+                border-radius: 5px;
+
+                &:hover {
+                    color: teal;
+                    border: 2px solid white;
+                }
+            }
+        }
+    }
+
+    .home-container {
+        .followers-container {
+            width: 25%;
+            margin-left: auto;
+            padding: 20px;
+        }
+    
+        .followers-card {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .follower-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .unfollow-button {
+            margin-left: auto;
+            padding: 5px 10px;
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: red;
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+            &:hover {
+                background-color: $lightGreen;
+                color: red;
+            }
+        }
+        .tofollow-container {
+            width: 25%;
+            margin-left: auto;
+            padding: 20px;
+    
+            .tofollow-card {
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                margin-bottom: 10px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+    
+                .follow-button {
+                    margin-left: auto;
+                    padding: 5px 10px;
+                    border: 2px solid black;
+                    border-radius: 5px;
+                    background-color: teal;
+                    color: white;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+    
+                    &:hover {
+                        background-color: $lightGreen;
+                        color: teal;
+                    }
+                }
+    
+                .follow-message {
+                    margin-left: auto;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    background-color: lightgrey;
+                    color: black;
+                }
+            }
+    
+            .shuffle-button {
+                display: block;
+                margin: 20px auto;
+                padding: 10px 20px;
+                border: none;
+                background-color: teal;
+                color: white;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+    
+                &:hover {
+                    background-color: $lightGreen;
+                    color: teal;
+                }
+            }
+        }
+   
+        .toggle-button {
+            background-color: teal;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        
+            &:hover {
+                background-color: #008080; /* Darker shade of teal */
+            }
+        
+            &.active {
+                background-color: #90ee90; /* Light green */
+            }
+        
+            &.inactive {
+                background-color: #f0f0f0; /* Light gray */
+                color: #555; /* Dark gray text */
+            }
+        }
+        
+    
+    }
+
+    
+    
+    
+
+}
