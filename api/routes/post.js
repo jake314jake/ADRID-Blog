@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+import moment from 'moment/moment.js';
 import fileUpload from 'express-fileupload';
 import createPostHandler from '../utils/createPostHandler.js';
 import uploadFileHandler from '../utils/uploadFileHandler.js';
@@ -23,18 +24,26 @@ router.get("/",async (req,res)=>{
         return res.status(400).json({ message: "Please provide a username.", post: null });
     }
         try {
-       const post=  await dbAll("SELECT * from Posts as p INNER join Users as u ON  p.user_id=u.id where  u.username=?",[username])
+       const post=  await dbAll(
+        "SELECT  p.id as postid , * FROM Posts AS p INNER JOIN Users AS u ON p.user_id = u.id WHERE u.username = ? ORDER BY p.created_at DESC",
+        [username]
+      );
        if (!post) {
         return res.status(200).json({ message: "No avaliable posts", post: null });
           }
-          return res.status(200).json({ message: "Posts fetched successfully", post:post });
+        // Add createdAgo attribute to each post
+         const posts = post.map(p => ({
+        ...p,
+        createdAgo: moment(p.created_at).fromNow()
+         }));
+          return res.status(200).json({ message: "Posts fetched successfully", post:posts });
        } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(500).json({ message: "An error occurred while trying to get posts. Please try again later.", post: post });
         }
 
     
-})
+});
 router.get('/image/:username/:postId', (req, res) => {
     const { username, postId } = req.params;
     const imageDir = `public/upload/post/${username}/${postId}`;
