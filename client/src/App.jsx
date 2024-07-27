@@ -12,6 +12,8 @@ import Register from "./Pages/Register";
 import Loginpage from "./Pages/Loginpage";
 import Upload from "./Pages/Upload";
 import "./style.scss"
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 const router = createBrowserRouter([
   {
     path: "/",

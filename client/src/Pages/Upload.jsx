@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Upload.scss'; // Import the SCSS file
+import UserAvatar from '../Components/UserAvatar';
 
-const Upload = () => {
-  const [username, setUsername] = useState('');
+const Upload = ({ currentUser }) => {
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState('');
@@ -11,7 +12,7 @@ const Upload = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('username', username);
+    formData.append('username', currentUser.user.username);
     formData.append('content', content);
     formData.append('image', image);
 
@@ -29,38 +30,34 @@ const Upload = () => {
   };
 
   return (
-    <div>
-      <h1>Create Post</h1>
+    <div className="upload-container">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        <div className="form-header">
+          <UserAvatar userName={currentUser.user.username} displayUsername={false} />
         </div>
-        <div>
-          <label>Content:</label>
+        <div className="form-group">
           <textarea
+            id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            placeholder="Write something..."
             required
           ></textarea>
         </div>
-        <div>
-          <label>Image:</label>
+        <div className="form-group">
+          <label htmlFor="image" className="image-label">
+            <i className="fa fa-camera"></i> 
+          </label>
           <input
+            id="image"
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
-            required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit-button">Post</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

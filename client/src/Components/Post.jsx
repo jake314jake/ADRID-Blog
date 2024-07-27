@@ -1,11 +1,19 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { useQuery } from  '@tanstack/react-query';
 import UserAvatar from './UserAvatar';
 import axios from 'axios';
 import './Post.scss'; // Import the Sass file
 
 const Post = ({ currentUser }) => {
-    
+    const [liked, setLiked] = useState(false);
+    const [showComments, setShowComments] = useState(false);
+
+    const handleLike = () => {
+      setLiked(!liked);
+    };
+    const handleToggleComments = () => {
+        setShowComments(!showComments);
+      };
 
     const { data: posts, error, isLoading } = useQuery({
         queryKey: ['posts', currentUser.user.username],
@@ -35,12 +43,22 @@ const Post = ({ currentUser }) => {
                         </div>
                         <div className="image-container">
                             {/* Assuming there is an image field */}
-                            <img src={`http://localhost:8800/api/post/image/${post.username}/${post.postid}`} alt="Post" />
+                            <img src={`api/post/image/${post.username}/${post.postid}`} alt="Post" />
                         </div>
                         <div className="reaction-container">
-                            {/* Reactions can be added here */}
-                        </div>
-                    </div>
+              <div className={`like-button ${liked ? 'liked' : ''}`} onClick={handleLike}>
+                <i className="fa fa-heart"></i>
+              </div>
+              <div className={`comment-button ${showComments ? 'active' : ''}`} onClick={handleToggleComments}>
+                <i className="fa fa-comment"></i>
+              </div>
+            </div>
+            {showComments && (
+              <div className="comment-field">
+                <input type="text" placeholder="Add a comment..." />
+              </div>
+            )}
+          </div>
                 ))
             ) : (
                 <div>No posts available</div>
