@@ -18,6 +18,9 @@ app.use(cookieParser())
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
+// static files 
+
+
 
 app.use('/api/users', usersRouter);
 app.use('/api/register',registerRoute);
