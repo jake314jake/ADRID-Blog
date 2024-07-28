@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <div className='home-container'>
       <Navbar />
-      <div>Home</div>
+      
        <Followers currentUser={currentUser} />
       <ToFollow currentUser={currentUser}  numberOfUsers={numberOfUsers}></ToFollow>
        <Upload currentUser={currentUser}></Upload>
