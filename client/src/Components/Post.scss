@@ -65,7 +65,11 @@
           &.liked {
             color: red;
           }
-  
+          .like-count {
+            margin-left: 5px;
+            font-size: 20px;
+            color: #777;
+          }
           &.active {
             color: #007bff;
           }

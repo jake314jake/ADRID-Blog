@@ -8,6 +8,7 @@ import loginRouter from './routes/login.js'
 import logoutRouter from './routes/logout.js'
 import followRouter from './routes/follow.js'
 import postRouter from './routes/post.js'
+import likeRouter from  './routes/like.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 const port = process.env.PORT || 8800; 
@@ -28,6 +29,7 @@ app.use('/api/login',loginRouter);
 app.use('/api/logout',logoutRouter);
 app.use('/api/follow',followRouter);
 app.use('/api/post',postRouter);
+app.use('/api/like',likeRouter);
 // Start server
 
 
