@@ -26,6 +26,30 @@ router.post("/",async (req,res) => {
 
 
 });
+// DELETE /api/like   a user can unlike a post 
+router.delete("/",async (req,res) => {
+    
+    const { username, postid } = req.body;
+    if (!username || !postid) {
+        return res.status(400).json({ message: "Please provide both username and post id.", like: null });
+
+    }
+    try {
+        const user = await dbGet('SELECT id FROM users WHERE username = ?', [username]);
+        if (!user) {
+            return res.status(404).json({ message: "User not found.", like: null });
+        }
+        await dbRun('DELETE FROM Reactions WHERE post_id=? AND user_id=?', [postid,user.id]);
+        res.status(201).json({ message: `${username} unliked a post ${postid}!`, like: true });
+        
+    } catch (error) {
+        
+        res.status(500).json({ message: "An error occurred while trying to unlike a post. Please try again later.", like: null });
+    }
+
+
+
+});
 // GET /api/like   GET THR REACTIONS FOR A POST
 router.get("/",async (req,res)=> {
 const {postid}=req.query;

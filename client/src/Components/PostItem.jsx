@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import UserAvatar from './UserAvatar';
 import axios from 'axios';
 
@@ -7,25 +7,43 @@ const fetchLikes = async (postId) => {
   const { data } = await axios.get('/api/like', {
     params: { postid: postId }
   });
-  return data.like.length;
+  return data.like;
 };
 
 const PostItem = ({ post, currentUser }) => {
+  const queryClient = useQueryClient();
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
-  const handleLike = () => {
+  const { data: likesData, isLoading: isLoadingLikes } = useQuery({
+    queryKey: ['likes', post.postid],
+    queryFn: () => fetchLikes(post.postid)
+  });
+
+  useEffect(() => {
+    if (likesData) {
+      setLiked(likesData.some(reaction => reaction.user_id === currentUser.user.id));
+    }
+  }, [likesData, currentUser.user.id]);
+
+  const handleLike = async () => {
+    if (liked) {
+      await axios.delete('/api/like', {
+        data: { username: currentUser.user.username, postid: post.postid }
+      });
+    } else {
+      await axios.post('/api/like', {
+        username: currentUser.user.username,
+        postid: post.postid
+      });
+    }
     setLiked(!liked);
+    queryClient.invalidateQueries(['likes', post.postid]);
   };
 
   const handleToggleComments = () => {
     setShowComments(!showComments);
   };
-
-  const { data: likesCount, isLoading: isLoadingLikes } = useQuery({
-    queryKey: ['likes', post.postid],
-    queryFn: () => fetchLikes(post.postid)
-  });
 
   return (
     <div key={post.postid} className="post-container">
@@ -44,7 +62,7 @@ const PostItem = ({ post, currentUser }) => {
         <div className={`like-button ${liked ? 'liked' : ''}`} onClick={handleLike}>
           <i className="fa fa-heart"></i>
           <span className="like-count">
-            {isLoadingLikes ? 'Loading...' : likesCount || 0}
+            {isLoadingLikes ? 'Loading...' : likesData ? likesData.length : 0}
           </span>
         </div>
         <div className={`comment-button ${showComments ? 'active' : ''}`} onClick={handleToggleComments}>
