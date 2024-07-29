@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import UserAvatar from './UserAvatar';
+import PostContent from './PostContent';
 import axios from 'axios';
 
 const fetchLikes = async (postId) => {
@@ -53,7 +54,7 @@ const PostItem = ({ post, currentUser }) => {
         <p>{post.createdAgo}</p>
       </div>
       <div className="content-container">
-        <p>{post.content}</p>
+      <PostContent content={post.content}></PostContent>
       </div>
       <div className="image-container">
         <img src={`api/post/image/${post.username}/${post.postid}`} alt="Post" />

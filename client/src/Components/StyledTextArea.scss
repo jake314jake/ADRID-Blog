@@ -1,0 +1,16 @@
+// src/Components/StyledTextarea.scss
+.mentions {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    min-height: 100px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .mention__suggestions {
+    color: blue;
+    font-weight: bold;
+  }
+  

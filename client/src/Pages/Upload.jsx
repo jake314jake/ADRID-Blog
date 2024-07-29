@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import './Upload.scss'; // Import the SCSS file
 import UserAvatar from '../Components/UserAvatar';
+import StyledTextArea from '../Components/StyledTextArea';
 
 const Upload = ({ currentUser }) => {
   const [content, setContent] = useState('');
@@ -54,13 +55,7 @@ const Upload = ({ currentUser }) => {
           <UserAvatar userName={currentUser.user.username} displayUsername={false} />
         </div>
         <div className="form-group">
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Write something..."
-            required
-          ></textarea>
+          <StyledTextArea content={content} setContent={setContent}></StyledTextArea>
         </div>
         <div className="form-group">
           <label htmlFor="image" className="image-label">

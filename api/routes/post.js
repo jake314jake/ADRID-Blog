@@ -7,6 +7,7 @@ import fileUpload from 'express-fileupload';
 import createPostHandler from '../utils/createPostHandler.js';
 import uploadFileHandler from '../utils/uploadFileHandler.js';
 import saveImageHandler from '../utils/saveImageHandler .js';
+import saveTagHandler from '../utils/saveTagHandler.js';
 import { dbAll } from '../database/connectionDB.js';
 
 
@@ -14,8 +15,8 @@ import { dbAll } from '../database/connectionDB.js';
 const router = express.Router();
 router.use(fileUpload());
 // Create a new post, handle file upload, and add image details POST /api/post
-router.post('/',createPostHandler,uploadFileHandler,saveImageHandler, (req, res) => {
-    res.status(201).json({ message: 'Post created successfully', postId: req.postId });
+router.post('/',createPostHandler,uploadFileHandler,saveImageHandler,saveTagHandler, (req, res) => {
+    res.status(201).json({ message: 'Post created successfully', postId: req.postId ,tags:req.tags});
 });
 // retrive a user posts GET /api/post
 router.get("/",async (req,res)=>{

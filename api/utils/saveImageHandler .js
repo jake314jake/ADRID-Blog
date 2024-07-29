@@ -1,6 +1,6 @@
 import { dbRun } from "../database/connectionDB.js";
 
-const saveImageHandler = async (req, res) => {
+const saveImageHandler = async (req, res,next) => {
   const { postId } = req;
   const { imageUrl } = req;
 
@@ -13,8 +13,9 @@ const saveImageHandler = async (req, res) => {
     await dbRun('INSERT INTO Images (post_id, image_url) VALUES (?, ?)', [postId, imageUrl]);
 
     console.log('addImageHandler: Success', { postId, imageUrl });
-
-    res.status(201).json({ message: 'Image added successfully' });
+    next(); 
+    
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

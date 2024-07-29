@@ -25,8 +25,8 @@ const createPostHandler = async (req, res, next) => {
     }
 
     req.postId = postResult.lastID; 
-    req.username=username
-
+    req.username=username;
+   req.content=content;
     console.log('createPostHandler: Success', { postId: req.postId, username: req.username });
 
     next(); 
