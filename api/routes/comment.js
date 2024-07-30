@@ -13,9 +13,10 @@ const user = await dbGet('SELECT id FROM users WHERE username = ?', [username]);
 if (!user) {
     return res.status(404).json({ message: "User not found.", comment: null });
 }
+try {
 await dbRun('INSERT INTO Comments (post_id, user_id,content,created_at) VALUES (?, ?,?,?)', [postid,user.id, content,new Date().toISOString()]);
 res.status(201).json({ message: `${username} comment on post ${postid}!`, comment: true });
-try {
+
     
 } catch (error) {
     res.status(500).json({ message: "An error occurred while trying to comment. Please try again later.", comment: null });
@@ -30,7 +31,7 @@ router.get("/",async (req,res)=> {
         res.status(400).json({message:"you should provide postid",comment:null});
     }
     try {
-        const comment=await dbAll("SELECT * FROM posts as p INNER JOIN comments as c ON p.id=c.post_id WHERE p.id=? ",[postid]);
+        const comment=await dbAll("SELECT * FROM posts as p INNER JOIN comments as c ON p.id=c.post_id INNER JOIN Users AS u ON u.id=c.user_id  WHERE p.id=? ",[postid]);
         const comments = comment.map(c => ({
             ...c,
             createdAgo: moment(c.created_at).fromNow()

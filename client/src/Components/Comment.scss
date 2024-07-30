@@ -1,0 +1,22 @@
+// src/Components/Comment.scss
+
+.comments-container {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+  }
+  
+  .comment-field {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  
+    input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  }
+  

@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import UserAvatar from './UserAvatar';
 import PostContent from './PostContent';
+import Comment from './Comment';
 import axios from 'axios';
-
+import "./PostItem.scss"
 const fetchLikes = async (postId) => {
   const { data } = await axios.get('/api/like', {
     params: { postid: postId }
   });
   return data.like;
+};
+const fetchComments = async (postId) => {
+  const { data } = await axios.get('/api/comment', {
+    params: { postid: postId }
+  });
+  return data.comment;
 };
 
 const PostItem = ({ post, currentUser }) => {
@@ -20,7 +27,10 @@ const PostItem = ({ post, currentUser }) => {
     queryKey: ['likes', post.postid],
     queryFn: () => fetchLikes(post.postid)
   });
-
+  const { data: commentsData, isLoading:isLoadingComments } = useQuery({
+    queryKey: ['comments', post.postid],
+    queryFn: () => fetchComments(post.postid),
+  });
   useEffect(() => {
     if (likesData) {
       setLiked(likesData.some(reaction => reaction.user_id === currentUser.user.id));
@@ -68,11 +78,17 @@ const PostItem = ({ post, currentUser }) => {
         </div>
         <div className={`comment-button ${showComments ? 'active' : ''}`} onClick={handleToggleComments}>
           <i className="fa fa-comment"></i>
+          <span className="like-count">
+            {isLoadingComments ? 'Loading...' : commentsData ? commentsData.length : 0}
+          </span>
         </div>
       </div>
       {showComments && (
-        <div className="comment-field">
-          <input type="text" placeholder="Add a comment..." />
+        <div className="comment-section">
+          <div className="comment-field">
+            <input type="text" placeholder="Add a comment..." />
+          </div>
+          <Comment commentsData={commentsData} isLoadingComments={isLoadingComments} />
         </div>
       )}
     </div>

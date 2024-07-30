@@ -1,9 +1,10 @@
 import React from 'react';
 import Avatar from 'react-avatar';
-
+import './UserAvatar.scss';
 const UserAvatar = ({ userName ,displayUsername=true}) => {
   return (
-    <>
+    
+     <div className="avatar-container">
       {userName ? (
         <>
         <Avatar name={userName} round={true} size="40"  />
@@ -13,7 +14,7 @@ const UserAvatar = ({ userName ,displayUsername=true}) => {
       ) : (
         <Avatar name="Guest" round={true} size="40" />
       )}
-    </>
+    </div>
   );
 };
 

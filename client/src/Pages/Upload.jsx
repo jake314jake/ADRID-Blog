@@ -52,7 +52,7 @@ const Upload = ({ currentUser }) => {
     <div className="upload-container">
       <form onSubmit={handleSubmit}>
         <div className="form-header">
-          <UserAvatar userName={currentUser.user.username} displayUsername={false} />
+          <UserAvatar userName={currentUser.user.username} displayUsername={true} />
         </div>
         <div className="form-group">
           <StyledTextArea content={content} setContent={setContent}></StyledTextArea>
