@@ -20,15 +20,39 @@ router.post('/',createPostHandler,uploadFileHandler,saveImageHandler,saveTagHand
 });
 // retrive a user posts GET /api/post
 router.get("/",async (req,res)=>{
-    const {username}=req.query
+    const { username, fetchFriendsPosts = 'true' } = req.query;
     if (!username) {
         return res.status(400).json({ message: "Please provide a username.", post: null });
     }
+    const shouldFetchFriendsPosts = fetchFriendsPosts.toLowerCase() === 'true';
         try {
-       const post=  await dbAll(
-        "SELECT  p.id as postid , * FROM Posts AS p INNER JOIN Users AS u ON p.user_id = u.id WHERE u.username = ? ORDER BY p.created_at DESC",
-        [username]
-      );
+            let query;
+        let queryParams = [username];
+
+        if (shouldFetchFriendsPosts) {
+            query = `
+                SELECT p.id as postid, p.content, p.created_at, u.username
+                FROM Posts p
+                INNER JOIN Users u ON p.user_id = u.id
+                WHERE u.username = ? OR u.id IN (
+                    SELECT followee_id FROM Follows
+                    INNER JOIN Users u2 ON Follows.follower_id = u2.id
+                    WHERE u2.username = ?
+                )
+                ORDER BY p.created_at DESC
+            `;
+            queryParams.push(username);
+        } else {
+            query = `
+                SELECT p.id as postid, p.content, p.created_at, u.username
+                FROM Posts p
+                INNER JOIN Users u ON p.user_id = u.id
+                WHERE u.username = ?
+                ORDER BY p.created_at DESC
+            `;
+        }
+
+        const post = await dbAll(query, queryParams);
        if (!post) {
         return res.status(200).json({ message: "No avaliable posts", post: null });
           }

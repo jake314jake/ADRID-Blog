@@ -49,7 +49,7 @@ const PostItem = ({ post, currentUser }) => {
   return (
     <div key={post.postid} className="post-container">
       <div className='header-container'>
-        <UserAvatar userName={currentUser.user.username} displayUsername={false}></UserAvatar>
+        <UserAvatar userName={post.username} displayUsername={false}></UserAvatar>
         <h2>{post.username}</h2>
         <p>{post.createdAgo}</p>
       </div>
