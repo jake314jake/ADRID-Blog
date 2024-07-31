@@ -65,7 +65,8 @@ router.get("/", async (req, res) => {
 // DELETE /api/follow - The user can unfollow another user
 router.delete("/", async (req, res) => {
     const { username, followUsername } = req.body;
-
+    console.debug(username)
+    console.debug(followUsername)
     // Check if the required fields are provided
     if (!username || !followUsername) {
         return res.status(400).json({ message: "Please provide both username and followUsername.", user: null });
