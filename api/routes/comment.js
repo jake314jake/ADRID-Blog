@@ -6,6 +6,7 @@ const router =express.Router();
 //POST /api/comment a user can add a comment to a post
 router.post("/",async (req,res)=> {
  const {username,postid,content}=req.body;
+ console.debug(username,postid,content)
  if (!username || !postid || !content) {
     return res.status(400).json({ message: "Please provide both username and post id.", comment: null });
 }
@@ -31,7 +32,7 @@ router.get("/",async (req,res)=> {
         res.status(400).json({message:"you should provide postid",comment:null});
     }
     try {
-        const comment=await dbAll("SELECT * FROM posts as p INNER JOIN comments as c ON p.id=c.post_id INNER JOIN Users AS u ON u.id=c.user_id  WHERE p.id=? ",[postid]);
+        const comment=await dbAll("SELECT * FROM posts as p INNER JOIN comments as c ON p.id=c.post_id INNER JOIN Users AS u ON u.id=c.user_id  WHERE p.id=? ORDER BY c.created_at DESC ",[postid]);
         const comments = comment.map(c => ({
             ...c,
             createdAgo: moment(c.created_at).fromNow()

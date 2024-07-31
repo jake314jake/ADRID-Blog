@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import UserAvatar from './UserAvatar';
 import PostContent from './PostContent';
 import Comment from './Comment';
+import CommentInput from './CommentInput';
 import axios from 'axios';
 import "./PostItem.scss"
 const fetchLikes = async (postId) => {
@@ -85,9 +86,7 @@ const PostItem = ({ post, currentUser }) => {
       </div>
       {showComments && (
         <div className="comment-section">
-          <div className="comment-field">
-            <input type="text" placeholder="Add a comment..." />
-          </div>
+          <CommentInput postid={post.postid} currentUser={post.username}></CommentInput>
           <Comment commentsData={commentsData} isLoadingComments={isLoadingComments} />
         </div>
       )}

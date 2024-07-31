@@ -21,8 +21,8 @@ const Comment = ({ commentsData, isLoadingComments}) => {
       {commentsData.length === 0 ? (
         <div>No comments yet.</div>
       ) : (
-        commentsData.map(comment => (
-          <CommentItem key={comment.id} comment={comment} />
+        commentsData.map((comment,Index) => (
+          <CommentItem key={Index} comment={comment} />
         ))
       )}
     </div>

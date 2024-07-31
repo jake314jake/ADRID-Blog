@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import PostItem from './PostItem';
+
 import './Post.scss'; 
 
 const Post = ({ currentUser }) => {
@@ -21,8 +22,8 @@ const Post = ({ currentUser }) => {
   return (
     <div className='posts-container'>
       {posts && posts.length > 0 ? (
-        posts.map(post => (
-          <PostItem key={post.postid} post={post} currentUser={currentUser} />
+        posts.map((post,Index) => (
+          <PostItem key={Index} post={post} currentUser={currentUser} />
         ))
       ) : (
         <div>No posts available</div>
