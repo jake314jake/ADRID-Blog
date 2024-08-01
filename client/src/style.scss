@@ -117,20 +117,22 @@ $lightGreen: #90ee90;
             align-items: center;
         }
 
+    
         .unfollow-button {
-            margin-left: auto;
-            padding: 5px 10px;
-            border: 2px solid black;
-            border-radius: 5px;
-            background-color: red;
-            color: white;
-            transition: background-color 0.3s ease, color 0.3s ease;
-
-            &:hover {
-                background-color: $lightGreen;
-                color: red;
-            }
+            background-color: #f23d1d;
+        color: #fff;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        margin-left: auto;
+  
+        &:hover {
+          background-color: #f23d1d;
         }
+          }
         .tofollow-container {
             width: 25%;
             margin-left: auto;

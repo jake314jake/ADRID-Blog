@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios'; 
 import ToggleButton from './ToggleButton'; 
 import FollowersItem from './FollowersItem';
+import "./Followers.scss"
 
 const fetchFollowers = async (username) => {
     try {

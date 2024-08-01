@@ -1,0 +1,42 @@
+.followers-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+  
+    .follower-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+  
+      .follow-button {
+        background-color: #1da1f2;
+        color: #fff;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        margin-left: auto;
+  
+        &:hover {
+          background-color: #0c8cd2;
+        }
+      }
+  
+      .following-span {
+        background-color: #e0e0e0;
+        color: #555;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        display: inline-block;
+        margin-left: auto; 
+      }
+    }
+  }
+  

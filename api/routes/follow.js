@@ -96,10 +96,11 @@ router.delete("/", async (req, res) => {
 });
 // GET /api/follow/shuffle - Shuffle random N users that the user doesn't already follow
 router.get("/shuffle", async (req, res) => {
-    const { username, numberOfUsers } = req.query;
+    const { username } = req.query;
+    const LIMIT_USERS=10
 
-    if (!username || !numberOfUsers) {
-        return res.status(400).json({ message: "Please provide both username and numberOfUsers.", users: null });
+    if (!username ) {
+        return res.status(400).json({ message: "Please provide  username .", users: null });
     }
 
     try {
@@ -109,19 +110,13 @@ router.get("/shuffle", async (req, res) => {
             return res.status(404).json({ message: "User not found.", users: null });
         }
 
-        // Get the IDs of users that the user already follows
-        const followedUsers = await dbAll('SELECT followee_id FROM follows WHERE follower_id = ?', [user.id]);
-        const followedUserIds = followedUsers.map(row => row.followee_id);
-
-        // Get random users that the user doesn't follow
-        let placeholders = followedUserIds.map(() => '?').join(',');
-        if (placeholders.length === 0) placeholders = 'NULL';
+        
         const randomUsers = await dbAll(
             `SELECT id, username, email FROM users 
-             WHERE id NOT IN (${placeholders}) 
+             WHERE id NOT IN (SELECT followee_id FROM follows WHERE follower_id = ?)  AND id != ?
              ORDER BY RANDOM() 
              LIMIT ?`,
-            [...followedUserIds, parseInt(numberOfUsers)]
+            [user.id,user.id,LIMIT_USERS]
         );
 
         res.status(200).json({ message: "Random users fetched successfully", users: randomUsers });
