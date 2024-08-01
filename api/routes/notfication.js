@@ -6,6 +6,8 @@ const router = express.Router();
 // POST /api/notify   notify a user for an event 
 router.post("/",async (req,res) => {
     const { username,type } = req.body;
+    console.debug(username)
+    console.debug(type)
     try {
         await dbRun('INSERT INTO Notifications (username, type,createdAt) VALUES (?, ?, ?)'
             , [username,type,new Date().toISOString()]);
@@ -17,10 +19,11 @@ router.post("/",async (req,res) => {
         res.status(500).json({ message: 'Internal server error',notfication:null });
     }
 })
+// GET /api/notify    get notfication for a user
 router.get("/",async (req,res)=> {
-    const { username } = req.body
+    const { username } = req.query
     try {
-        const notification= await dbAll("SELECT * FROM Notifications WHERE username=?"
+        const notification= await dbAll("SELECT * FROM Notifications WHERE isRead=0 AND username=? "
             ,[username]
         )
         const notifications = notification.map(n => ({
@@ -34,5 +37,16 @@ router.get("/",async (req,res)=> {
     }
 
 })
-
+// PATCH /api    make a noyfication as reade
+router.patch("/",async (req,res)=> {
+    const { notficationID} = req.body;
+    try {
+        await dbGet("UPDATE Notifications SET isRead=1 WHERE id=? ",[notficationID])
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Internal server error',notfication:null });
+        
+    }
+})
 export default router;

@@ -18,6 +18,13 @@ const fetchComments = async (postId) => {
   });
   return data.comment;
 };
+const notify =async (username,type)=>{
+  const { data } = await axios.post('/api/notify', {
+      username,
+      type
+    });
+    return data;
+}
 
 const PostItem = ({ post, currentUser }) => {
   const queryClient = useQueryClient();
@@ -48,6 +55,7 @@ const PostItem = ({ post, currentUser }) => {
         username: currentUser.user.username,
         postid: post.postid
       });
+      notify(post.username,"like");
     }
     setLiked(!liked);
     queryClient.invalidateQueries(['likes', post.postid]);
@@ -86,7 +94,7 @@ const PostItem = ({ post, currentUser }) => {
       </div>
       {showComments && (
         <div className="comment-section">
-          <CommentInput postid={post.postid} currentUser={post.username}></CommentInput>
+          <CommentInput postid={post.postid} postowner={post.username} ></CommentInput>
           <Comment commentsData={commentsData} isLoadingComments={isLoadingComments} />
         </div>
       )}

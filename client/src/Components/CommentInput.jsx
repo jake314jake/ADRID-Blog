@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import './CommentInput.scss'
 import { AuthContext } from '../Context/AuthContext';
 
+
 const addComment = async ({ username, postid, content }) => {
     console.log(username)
   const { data } = await axios.post('/api/comment', {
@@ -13,8 +14,14 @@ const addComment = async ({ username, postid, content }) => {
   });
   return data;
 };
-
-const CommentInput = ({ postid }) => {
+const notify =async (username,type)=>{
+    const { data } = await axios.post('/api/notify', {
+        username,
+        type
+      });
+      return data;
+}
+const CommentInput = ({ postid ,postowner}) => {
     const { currentUser } = useContext(AuthContext);
   const [commentContent, setCommentContent] = useState("");
   const queryClient = useQueryClient();
@@ -25,6 +32,7 @@ const CommentInput = ({ postid }) => {
       // Invalidate and refetch the comments query to show the new comment
       queryClient.invalidateQueries(['comments', postid]);
       setCommentContent(""); // Clear the input after successful comment submission
+      notify(postowner,"comment");
     },
     onError: (error) => {
       console.error('Error adding comment:', error);
