@@ -10,6 +10,7 @@ import followRouter from './routes/follow.js'
 import postRouter from './routes/post.js'
 import likeRouter from  './routes/like.js'
 import commentRouter from './routes/comment.js'
+import notificationRouter from './routes/notfication.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 const port = process.env.PORT || 8800; 
@@ -32,6 +33,7 @@ app.use('/api/follow',followRouter);
 app.use('/api/post',postRouter);
 app.use('/api/like',likeRouter);
 app.use('/api/comment',commentRouter);
+app.use("/api/notify",notificationRouter);
 // Start server
 
 
