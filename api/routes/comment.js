@@ -32,7 +32,8 @@ router.get("/",async (req,res)=> {
         res.status(400).json({message:"you should provide postid",comment:null});
     }
     try {
-        const comment=await dbAll("SELECT * FROM posts as p INNER JOIN comments as c ON p.id=c.post_id INNER JOIN Users AS u ON u.id=c.user_id  WHERE p.id=? ORDER BY c.created_at DESC ",[postid]);
+        const comment=await dbAll("SELECT c.id as comment_id ,* FROM posts AS p INNER JOIN comments AS c ON p.id = c.post_id INNER JOIN Users AS u ON u.id = c.user_id WHERE p.id = ? ORDER BY c.created_at DESC; ",[postid]);
+        
         const comments = comment.map(c => ({
             ...c,
             createdAgo: moment(c.created_at).fromNow()
@@ -43,8 +44,10 @@ router.get("/",async (req,res)=> {
         res.status(200).json({message:"comment fetched ",comment:comments});
     
     } catch (error) {
+
         res.status(500).json({ message: "An error occurred while trying to fetch comments. Please try again later.", comment: null });
-    }
+        throw error;
+     }
     
 })
 export default router;

@@ -10,6 +10,7 @@ const createNotficationHandler = async (req, res, next) => {
         , [recipientUsername,senderUsername,type,postId,new Date().toISOString()]);
 
 
+
     next(); 
   } catch (error) {
     console.error(error);

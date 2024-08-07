@@ -1,0 +1,70 @@
+.followers-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    .followers-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+  
+    .followers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  
+    .followers-card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+  
+      .follower-box {
+        display: flex;
+        align-items: center;
+  
+        .user-avatar {
+          margin-right: 10px;
+        }
+  
+        .unfollow-button {
+          background-color: #e74c3c;
+          color: #ffffff;
+          border: none;
+          border-radius: 4px;
+          padding: 5px 10px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+  
+          &:hover {
+            background-color: #c0392b;
+          }
+        }
+  
+        .following-span {
+          background-color: #2ecc71;
+          color: #ffffff;
+          border-radius: 4px;
+          padding: 5px 10px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  
+  

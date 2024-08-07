@@ -52,7 +52,16 @@ CREATE TABLE "Comments" (
     FOREIGN KEY("post_id") REFERENCES "Posts"("id"),
     FOREIGN KEY("user_id") REFERENCES "Users"("id")
 );
-
+CREATE TABLE "CommentReactions" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "comment_id" INTEGER,
+    "user_id" INTEGER,
+    "reaction_type_id" INTEGER,
+    "created_at" TEXT,
+    FOREIGN KEY("comment_id") REFERENCES "Comments"("id"),
+    FOREIGN KEY("user_id") REFERENCES "Users"("id"),
+    FOREIGN KEY("reaction_type_id") REFERENCES "ReactionType"("id")
+);
 CREATE TABLE "ReactionType" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "name" TEXT UNIQUE
