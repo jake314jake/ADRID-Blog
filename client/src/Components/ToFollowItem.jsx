@@ -14,7 +14,14 @@ const followUser = async ({ username, followUsername }) => {
         throw error;
     }
 };
-
+const notify =async (username,type,actionuser)=>{
+    const { data } = await axios.post('/api/notify', {
+        username,
+        type,
+        actionuser
+      });
+      return data;
+  }
 const ToFollowItem = ({ username, followUsername }) => {
     const [isFollowing, setIsFollowing] = useState(false); // State to track if user is following
     const queryClient = useQueryClient();
@@ -24,6 +31,7 @@ const ToFollowItem = ({ username, followUsername }) => {
       onSuccess: () => {
         queryClient.invalidateQueries(['followers', username]);
         setIsFollowing(true); // Set state to true on success
+        notify(followUsername,"Follow",username);
       },
       onError: (error) => {
         console.error('Error following user:', error); 

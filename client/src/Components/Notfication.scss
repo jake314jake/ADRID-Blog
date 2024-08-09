@@ -1,0 +1,43 @@
+.notification-wrapper {
+    position: relative;
+
+    .notification-icon {
+        position: relative;
+        cursor: pointer;
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+    }
+
+    .notification-list {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        width: 300px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        max-height: 400px;
+        overflow-y: auto;
+
+        p {
+            padding: 10px;
+            text-align: center;
+            color: #999;
+        }
+    }
+}

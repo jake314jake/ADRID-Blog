@@ -14,10 +14,11 @@ const addComment = async ({ username, postid, content }) => {
   });
   return data;
 };
-const notify =async (username,type)=>{
+const notify =async (username,type,actionuser)=>{
     const { data } = await axios.post('/api/notify', {
         username,
-        type
+        type,
+        actionuser
       });
       return data;
 }
@@ -32,7 +33,7 @@ const CommentInput = ({ postid ,postowner}) => {
       // Invalidate and refetch the comments query to show the new comment
       queryClient.invalidateQueries(['comments', postid]);
       setCommentContent(""); // Clear the input after successful comment submission
-      notify(postowner,"comment");
+      notify(postowner,"comment",currentUser.user.username);
     },
     onError: (error) => {
       console.error('Error adding comment:', error);

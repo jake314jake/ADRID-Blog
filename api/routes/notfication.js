@@ -5,12 +5,13 @@ const router = express.Router();
 
 // POST /api/notify   notify a user for an event 
 router.post("/",async (req,res) => {
-    const { username,type } = req.body;
+    const { username,type,actionuser } = req.body;
     console.debug(username)
     console.debug(type)
+    console.debug(actionuser)
     try {
-        await dbRun('INSERT INTO Notifications (username, type,createdAt) VALUES (?, ?, ?)'
-            , [username,type,new Date().toISOString()]);
+        await dbRun('INSERT INTO Notifications (username, type,createdAt,actionuser) VALUES (?, ?, ?,?)'
+            , [username,type,new Date().toISOString(),actionuser]);
 
         res.status(201).json({ message: 'Notification created successfully' ,notfication:true });
         
@@ -30,10 +31,13 @@ router.get("/",async (req,res)=> {
             ...n,
             createdAgo: moment(n.createdAt).fromNow()
              }));
-        res.status(200).json({ message: 'Notification fetched successfully' ,notfication:notifications });
+        res.status(200).json({ message: 'Notification fetched successfully' ,notification:notifications });
     } catch (error) {
-        console.log(error)
+        
         res.status(500).json({ message: 'Internal server error',notfication:null });
+        throw error;
+        
+
     }
 
 })
