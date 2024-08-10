@@ -77,3 +77,20 @@ CREATE TABLE "Reactions" (
     FOREIGN KEY("user_id") REFERENCES "Users"("id"),
     FOREIGN KEY("reaction_type_id") REFERENCES "ReactionType"("id")
 );
+CREATE TABLE "Notifications" (
+	"id"	INTEGER,
+	"username"	TEXT NOT NULL,
+	"type"	TEXT NOT NULL,
+	"isRead"	BOOLEAN DEFAULT 0,
+	"createdAt"	TEXT,
+	"actionuser"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE "Share" (
+	"id"	INTEGER,
+	"username"	TEXT,
+	"usersharedto"	TEXT,
+	"postid"	INTEGER,
+	"createdAt"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);

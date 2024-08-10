@@ -12,7 +12,7 @@ import likeRouter from  './routes/like.js'
 import commentRouter from './routes/comment.js'
 import commentlikeRouter from './routes/commentlike.js'
 import notificationRouter from './routes/notfication.js'
-
+import shareRouter from './routes/share.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 const port = process.env.PORT || 8800; 
@@ -37,6 +37,7 @@ app.use('/api/like',likeRouter);
 app.use('/api/comment',commentRouter);
 app.use("/api/notify",notificationRouter);
 app.use("/api/commentlike",commentlikeRouter);
+app.use("/api/share",shareRouter);
 // Start server
 
 
