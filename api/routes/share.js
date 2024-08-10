@@ -1,5 +1,5 @@
 import express from 'express';
-import { dbRun } from '../database/connectionDB.js';
+import { dbRun,dbAll } from '../database/connectionDB.js';
 const router = express.Router();
 
 // POST /api/share - Share a post with another user
